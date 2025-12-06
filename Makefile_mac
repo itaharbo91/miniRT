@@ -1,0 +1,128 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: itaharbo <itaharbo@student.42.fr>          +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2025/01/11 15:29:13 by itaharbo          #+#    #+#              #
+#    Updated: 2025/08/29 14:27:30 by itaharbo         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+NAME		= miniRT
+NAME_BONUS	= miniRT_bonus
+
+CC			= cc
+CFLAGS		= -Wall -Wextra -Werror
+INCLUDES	= -I./includes -I./includes_bonus -I./others/minilibx_macos_opengl
+
+SRCDIR		= srcs
+BONUSDIR	= bonus
+OBJDIR		= objs
+LIBDIR		= others/minilibx_macos_opengl
+
+MLX_LIB		= $(LIBDIR)/libmlx.a
+LIBS		= -L$(LIBDIR) -lmlx -framework OpenGL -framework AppKit
+
+SRCS		= $(SRCDIR)/main/main.c $(SRCDIR)/main/error.c $(SRCDIR)/main/clean.c \
+			  $(SRCDIR)/parser/parser.c $(SRCDIR)/parser/parse_camera.c \
+			  $(SRCDIR)/parser/parse_light.c $(SRCDIR)/parser/parse_ambi_light.c \
+			  $(SRCDIR)/parser/parse_sphere.c $(SRCDIR)/parser/parse_plane.c \
+			  $(SRCDIR)/parser/parse_cylinder.c \
+			  $(SRCDIR)/parser_utils/init_objects_memory.c $(SRCDIR)/parser_utils/conv_pointer_values.c \
+			  $(SRCDIR)/parser_utils/conv_value.c $(SRCDIR)/parser_utils/color_parse.c \
+		      $(SRCDIR)/utils/ft_strtof.c $(SRCDIR)/utils/utils.c $(SRCDIR)/utils/ft_atoi.c \
+			  $(SRCDIR)/utils/is_utils.c $(SRCDIR)/utils/ft_calloc.c \
+			  $(SRCDIR)/get_next_line/get_next_line.c $(SRCDIR)/get_next_line/get_next_line_utils.c \
+			  $(SRCDIR)/colors/colors_calculations.c $(SRCDIR)/colors/colors_utils.c \
+			  $(SRCDIR)/render/cylinder_intersections.c $(SRCDIR)/math/cylinder_equations.c \
+			  $(SRCDIR)/render/generate_ray.c $(SRCDIR)/render/plane_intersections.c \
+			  $(SRCDIR)/render/viewport.c $(SRCDIR)/render/render_ray.c \
+			  $(SRCDIR)/render/sphere_intersections.c $(SRCDIR)/math/sphere_equations.c \
+			  $(SRCDIR)/math/vectors_calc_bis.c $(SRCDIR)/math/vectors_calculations.c \
+			  $(SRCDIR)/matrix/matrix.c $(SRCDIR)/matrix/matrix_transformations.c \
+			  $(SRCDIR)/controls/key_controls.c $(SRCDIR)/controls/key_handler.c \
+			  $(SRCDIR)/controls/object_translations.c $(SRCDIR)/controls/object_resize.c \
+			  $(SRCDIR)/controls/object_rotations.c $(SRCDIR)/controls/choose_object.c \
+			  $(SRCDIR)/window/window.c $(SRCDIR)/window/controls_infos.c \
+			  
+BONUS_SRCS	= $(BONUSDIR)/main/main_bonus.c $(BONUSDIR)/main/error_bonus.c $(BONUSDIR)/main/clean_bonus.c \
+			  $(BONUSDIR)/parser/parser_bonus.c $(BONUSDIR)/parser/parse_camera_bonus.c \
+			  $(BONUSDIR)/parser/parse_light_bonus.c $(BONUSDIR)/parser/parse_ambi_light_bonus.c \
+			  $(BONUSDIR)/parser/parse_sphere_bonus.c $(BONUSDIR)/parser/parse_plane_bonus.c \
+			  $(BONUSDIR)/parser/parse_cylinder_bonus.c \
+			  $(BONUSDIR)/parser_utils/init_objects_memory_bonus.c $(BONUSDIR)/parser_utils/conv_pointer_values_bonus.c \
+			  $(BONUSDIR)/parser_utils/conv_value_bonus.c $(BONUSDIR)/parser_utils/color_parse_bonus.c \
+		      $(BONUSDIR)/utils/ft_strtof_bonus.c $(BONUSDIR)/utils/utils_bonus.c $(BONUSDIR)/utils/ft_atoi_bonus.c \
+			  $(BONUSDIR)/utils/is_utils_bonus.c $(BONUSDIR)/utils/ft_calloc_bonus.c \
+			  $(BONUSDIR)/get_next_line/get_next_line_bonus.c $(BONUSDIR)/get_next_line/get_next_line_utils_bonus.c \
+			  $(BONUSDIR)/colors/colors_calculations_bonus.c $(BONUSDIR)/colors/colors_utils_bonus.c \
+			  $(BONUSDIR)/colors/specular_color_bonus.c \
+			  $(BONUSDIR)/render/cylinder_intersections_bonus.c $(BONUSDIR)/math/cylinder_equations_bonus.c \
+			  $(BONUSDIR)/render/generate_ray_bonus.c $(BONUSDIR)/render/plane_intersections_bonus.c \
+			  $(BONUSDIR)/render/viewport_bonus.c $(BONUSDIR)/render/render_ray_bonus.c \
+			  $(BONUSDIR)/render/sphere_intersections_bonus.c $(BONUSDIR)/math/sphere_equations_bonus.c \
+			  $(BONUSDIR)/math/vectors_calc_bis_bonus.c $(BONUSDIR)/math/vectors_calculations_bonus.c \
+			  $(BONUSDIR)/matrix/matrix_bonus.c $(BONUSDIR)/matrix/matrix_transformations_bonus.c \
+			  $(BONUSDIR)/controls/key_controls_bonus.c $(BONUSDIR)/controls/key_handler_bonus.c \
+			  $(BONUSDIR)/controls/object_translations_bonus.c $(BONUSDIR)/controls/object_resize_bonus.c \
+			  $(BONUSDIR)/controls/object_rotations_bonus.c $(BONUSDIR)/controls/choose_object_bonus.c \
+			  $(BONUSDIR)/window/window_bonus.c $(BONUSDIR)/window/controls_infos_bonus.c \
+			  $(BONUSDIR)/colors/checkerboard_bonus.c $(BONUSDIR)/colors/cylinder_checkerboard_bonus.c \
+			  $(BONUSDIR)/colors/cone_checkerboard_bonus.c $(BONUSDIR)/parser_utils/checkerboard_check_bonus.c \
+			  $(BONUSDIR)/parser/parse_cone_bonus.c $(BONUSDIR)/render/cone_intersections_bonus.c \
+			  $(BONUSDIR)/math/cone_equations_bonus.c $(BONUSDIR)/math/cone_calc_helpers_bonus.c \
+			  $(BONUSDIR)/controls/light_translation_bonus.c
+
+OBJS		= $(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
+BONUS_OBJS	= $(BONUS_SRCS:$(BONUSDIR)/%.c=$(OBJDIR)/%.o)
+ALL_OBJS	= $(OBJS) $(BONUS_OBJS)
+
+BONUS_FILE	= .bonus
+
+all: $(MLX_LIB) $(NAME)
+
+$(NAME): $(OBJS)
+	@echo "Compiling miniRT..."
+	@echo "Linking $(NAME)..."
+	$(CC) $(CFLAGS) $(OBJS) $(LIBS) -o $(NAME)
+	@echo "miniRT compiled successfully!"
+
+$(OBJDIR)/%.o: $(SRCDIR)/%.c
+	@mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+
+$(OBJDIR)/%.o: $(BONUSDIR)/%.c
+	@mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+
+$(MLX_LIB):
+	@make -C $(LIBDIR)
+
+bonus: $(MLX_LIB) $(BONUS_FILE)
+
+$(BONUS_FILE): $(BONUS_OBJS)
+	@echo "Compiling miniRT with bonus..."
+	@echo "Linking $(NAME_BONUS) with bonus..."
+	$(CC) $(CFLAGS) $(BONUS_OBJS) $(LIBS) -o $(NAME_BONUS)
+	@touch $(BONUS_FILE)
+	@echo "miniRT with bonus compiled successfully!"
+
+clean:
+	@echo "Cleaning object files..."
+	@rm -rf $(OBJDIR)
+	@rm -f $(BONUS_FILE)
+	@make -C $(LIBDIR) clean
+	@echo "Clean completed!"
+
+fclean: clean
+	@echo "Cleaning..."
+	@rm -f $(NAME) $(NAME_BONUS)
+	@echo "Full clean completed!"
+
+re: fclean all
+
+re_bonus: fclean bonus
+
+.PHONY: all clean fclean re bonus re_bonus
